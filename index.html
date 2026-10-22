@@ -3,273 +3,342 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080b09">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Casino BotánicosRP</title>
 <style>
-:root{--bg:#080b09;--panel:#111713;--gold:#d9b66d;--gold2:#f4d995;--green:#547b50;--text:#f5f3e9;--muted:#a5afa4;--line:#2b382d}
+:root{--bg:#07120c;--panel:#12251a;--green:#39d98a;--gold:#e9c76b;--text:#f4f8f4;--muted:#a9bbae}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#18241a,#080b09 55%);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
-button,input{font:inherit}button{cursor:pointer}
-header{position:sticky;top:0;z-index:10;background:#080b09ed;border-bottom:1px solid #263328;padding:12px max(16px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:42px;height:42px;border:1px solid var(--gold);border-radius:14px;display:grid;place-items:center;color:var(--gold);font-size:22px;background:#142017}
-.brand strong{display:block;letter-spacing:1.4px;font-size:15px}
-.brand small{color:var(--muted);font-size:11px;letter-spacing:2px}
-.header-right{display:flex;align-items:center;gap:10px}
-.balance-pill{border:1px solid #6e5b34;border-radius:999px;padding:9px 13px;color:var(--gold2);font-weight:800;font-size:13px}
-.icon-btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:9px 12px;border-radius:12px}
-main{max-width:1180px;margin:auto;padding:24px 16px 50px}
-.hero{padding:28px 0 22px;display:grid;grid-template-columns:1.4fr .8fr;gap:22px;align-items:center}
-.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:800}
-.hero h1{font-size:clamp(30px,5vw,54px);line-height:1.02;margin:12px 0}
-.hero h1 span{color:var(--gold2)}
-.hero p{color:var(--muted);line-height:1.65}
-.hero-card,.panel,.game-card{border:1px solid var(--line);background:linear-gradient(150deg,#151d17,#0e120f);border-radius:18px}
-.hero-card{border-color:#44513b;border-radius:22px;padding:22px}
-.big{font-size:29px;font-weight:900;color:var(--gold2);margin:7px 0}
-.hero-stats,.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:17px}
-.mini-stat,.statbox{background:#18221a;border:1px solid #29382b;border-radius:12px;padding:10px}
-.mini-stat small,.statbox small{display:block;color:var(--muted);font-size:10px}
-.mini-stat b,.statbox b{display:block;margin-top:4px}
-.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:22px 0 14px}
-.section-title h2{font-size:21px;margin:0}
-.section-title p{color:var(--muted);font-size:12px;margin:5px 0 0}
-.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.game-card{overflow:hidden;transition:.2s}
-.game-card:hover{border-color:#88703e;transform:translateY(-2px)}
-.game-art{height:125px;display:grid;place-items:center;font-size:52px;background:radial-gradient(circle,#31442e,#111812 68%);border-bottom:1px solid var(--line)}
-.game-body{padding:16px}
-.game-body h3{margin:0 0 6px}
-.game-body p{color:var(--muted);font-size:12px;line-height:1.5;min-height:38px}
-.game-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.tag{font-size:10px;color:var(--gold);border:1px solid #63502e;padding:5px 8px;border-radius:999px}
-.primary{background:linear-gradient(135deg,#f0d58d,#c29b4f);color:#16150f;border:0;border-radius:11px;padding:11px 15px;font-weight:900}
-.primary:disabled{opacity:.45;cursor:not-allowed}
-.secondary{background:#1a251c;border:1px solid #3b4b3a;color:var(--text);border-radius:10px;padding:10px 13px;font-weight:700}
-.content-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:16px;margin-top:28px}
-.panel{padding:18px}
-.panel h3{margin:0 0 14px}
-.statbox b{font-size:20px}
-.rank-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #273229}
-.rank-number{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#273629;color:var(--gold2);font-weight:900}
-.rank-name{flex:1;font-size:13px}
-.rank-name small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.rank-value{font-size:12px;color:var(--gold2);font-weight:800}
-.notice{font-size:11px;line-height:1.5;color:var(--muted);border:1px solid #344133;border-radius:12px;padding:12px;margin-top:14px;background:#101810}
-.modal{position:fixed;inset:0;z-index:30;background:#000b;display:none;align-items:center;justify-content:center;padding:14px}
-.modal.open{display:flex}
-.modal-box{width:min(850px,100%);max-height:92vh;overflow:auto;border:1px solid #5e583f;border-radius:20px;background:linear-gradient(150deg,#172019,#090d0a);padding:18px}
-.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:15px}
-.modal-head h2{margin:0;font-size:21px}
-.close{font-size:23px;background:transparent;color:var(--muted);border:0}
-.game-layout{display:grid;grid-template-columns:1fr 250px;gap:16px}
-.sidebox{border:1px solid var(--line);border-radius:14px;padding:14px;background:#0b100c}
-.sidebox h4{margin:0 0 10px}
-.field-label{display:block;color:var(--muted);font-size:11px;margin:12px 0 6px}
-.input{width:100%;background:#080b09;color:var(--text);border:1px solid #3a483b;border-radius:10px;padding:11px;outline:none}
-.quick-bets{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.quick-bets button{background:#202b21;color:var(--gold2);border:1px solid #354735;border-radius:8px;padding:6px 9px;font-size:11px}
-.game-message{min-height:36px;padding:10px;border-radius:10px;background:#172119;color:var(--muted);font-size:12px;line-height:1.5;margin-top:12px}
-.game-message.win{color:#c8f2b6;border:1px solid #486a3d}
-.game-message.lose{color:#f2c2b6;border:1px solid #6b3932}
-.roulette-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
-.roulette-wheel{width:min(220px,100%);aspect-ratio:1;border:9px solid #c5a15b;border-radius:50%;margin:auto;display:grid;place-items:center;background:repeating-conic-gradient(#182b1c 0deg 9.73deg,#8e292e 9.73deg 19.46deg);box-shadow:0 0 0 5px #332a18;transition:transform 2.5s cubic-bezier(.12,.72,.14,1)}
-.wheel-inner{width:44%;height:44%;border-radius:50%;background:radial-gradient(circle,#dec27a,#6b5023 70%);border:4px solid #211a10;display:grid;place-items:center;color:#111;font-size:24px;font-weight:1000}
-.roulette-board{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;margin-top:14px}
-.roulette-number{min-height:38px;border:1px solid #51634d;border-radius:7px;color:#fff;font-weight:800;font-size:12px;background:#1a432b;position:relative}
-.roulette-number.red{background:#942f35;border-color:#b94d52}
-.roulette-number.black{background:#151916;border-color:#465047}
-.roulette-number.zero{grid-column:span 12;background:#276039}
-.roulette-number.selected{outline:2px solid var(--gold2);box-shadow:0 0 0 2px #000}
-.roulette-number.selected:after{content:"✓";position:absolute;top:0;right:3px;color:#ffe49b;font-size:10px}
-.roulette-summary{border:1px solid #655432;border-radius:12px;padding:12px;background:#1b2015;margin-top:12px;font-size:12px;line-height:1.7}
-.roulette-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.result-big{font-size:26px;font-weight:1000;color:var(--gold2);text-align:center;margin:10px}
-.slot-machine{border:1px solid #67542d;border-radius:18px;background:#171c13;padding:20px;text-align:center}
-.slot-reels{display:flex;justify-content:center;gap:8px;margin:14px 0}
-.reel{width:80px;height:85px;display:grid;place-items:center;border-radius:12px;background:#eee6ce;color:#1a2118;font-size:40px;border:4px solid #bda05e}
-.slot-caption{color:var(--muted);font-size:12px}
-.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:105px;align-items:center}
-.playing-card{width:67px;height:94px;border-radius:9px;background:#f3efdf;color:#161a15;display:flex;flex-direction:column;justify-content:space-between;padding:7px;font-size:19px;font-weight:900}
-.playing-card.red-suit{color:#b62931}
-.playing-card span:last-child{align-self:flex-end;transform:rotate(180deg)}
-.blackjack-area{text-align:center}
-.bj-hand{padding:12px 0}
-.bj-hand h4{margin:0 0 10px;color:var(--muted)}
-footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:#778478;font-size:11px;text-align:center}
-@media(max-width:760px){
-.hero{grid-template-columns:1fr;padding-top:18px}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.game-art{height:100px}.content-grid,.game-layout{grid-template-columns:1fr}
-.roulette-top{grid-template-columns:1fr}.roulette-wheel{width:175px}
-.roulette-board{grid-template-columns:repeat(6,minmax(0,1fr))}
-.roulette-number.zero{grid-column:span 6}
-header{padding:10px 12px}.brand strong{font-size:12px}.brand small{font-size:9px}
-.logo{width:36px;height:36px}.balance-pill{font-size:11px;padding:8px}
-}
-@media(max-width:420px){
-.game-grid{grid-template-columns:1fr}.game-art{height:95px}
-.statbox{padding:8px}.statbox b{font-size:14px}.statbox small{font-size:9px}
-.roulette-number{min-height:35px}
-}
+body{margin:0;background:radial-gradient(ellipse at top,#1b422c,#07120c 65%);color:var(--text);font-family:Arial,sans-serif}
+header{text-align:center;padding:23px 12px;background:#07120cf2;border-bottom:1px solid #355640}
+.logo{font-size:clamp(25px,5vw,39px);font-weight:900;color:var(--gold)}
+header p{color:var(--muted)}
+.balance{display:inline-block;padding:11px 18px;border:1px solid var(--gold);border-radius:30px;color:var(--gold);font-weight:bold}
+nav{display:flex;gap:7px;padding:11px;overflow-x:auto;background:#09160f;position:sticky;top:0;z-index:10}
+nav button{white-space:nowrap;border:1px solid #355640;background:#172b1e;color:white;padding:11px 13px;border-radius:11px}
+nav button.active,nav button:hover{background:var(--green);color:#07120c}
+main{max-width:1000px;margin:auto;padding:20px 13px 45px}
+.view{display:none}.view.active{display:block}
+h1{font-size:clamp(23px,4vw,32px)}
+h2,h3{margin-top:0}
+p{line-height:1.5}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:13px}
+.card{background:linear-gradient(145deg,#172e20,#0c1910);border:1px solid #31523b;border-radius:17px;padding:17px;margin-bottom:14px}
+.game-card{display:flex;flex-direction:column;gap:9px}
+.art{height:110px;border-radius:13px;display:grid;place-items:center;font-size:49px;background:linear-gradient(135deg,#244b33,#102017)}
+.snow{background:linear-gradient(135deg,#bceeff,#477fa8)}
+.fruit{background:linear-gradient(135deg,#a33734,#e4a53a)}
+.goldart{background:linear-gradient(135deg,#75591c,#1c3927)}
+.btn{border:0;border-radius:10px;background:var(--green);color:#07120c;font-weight:bold;padding:12px 15px;cursor:pointer}
+.btn.gold{background:var(--gold)}
+.btn.secondary{background:#273c2d;border:1px solid #48664f;color:white}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:13px 0}
+.field{display:flex;flex-direction:column;gap:7px;flex:1;min-width:130px}
+input,select{width:100%;min-width:0;padding:11px;border-radius:9px;border:1px solid #49654f;background:#08150d;color:white}
+.numbers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:15px 0}
+.num{padding:10px 0;border-radius:8px;border:1px solid #526457;background:#17231a;color:white;font-weight:bold;cursor:pointer;min-width:0}
+.num.red{background:#87343b}.num.black{background:#202821}.num.zero{background:#18774b}
+.num.selected{outline:3px solid var(--gold);background:#68501a}
+.num:disabled{opacity:.45;cursor:not-allowed}
+.mult{display:block;font-size:10px;color:#ffdf7b;margin-top:4px}
+.result{padding:14px;background:#08140c;border:1px solid #34523a;border-radius:12px;margin-top:14px;line-height:1.6;overflow-wrap:anywhere}
+.reels{display:flex;justify-content:center;gap:9px;margin:20px 0}
+.reel{width:30%;max-width:105px;height:100px;display:grid;place-items:center;background:#f6f4e9;color:#16271a;border:4px solid var(--gold);border-radius:13px;font-size:clamp(35px,8vw,54px)}
+.reel.ice{background:linear-gradient(#effcff,#a1dff4);border-color:#8be8ff}
+.reel.fruitreel{background:linear-gradient(#fff0b5,#e9ac3b);border-color:#ffdb65}
+.hand{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.playcard{background:#f6f4e9;color:#17241a;border-radius:10px;width:65px;height:91px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:27px}
+.playcard small{font-size:12px}
+footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
+@media(min-width:700px){nav{justify-content:center}.numbers{grid-template-columns:repeat(12,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header>
- <div class="brand"><div class="logo">♧</div><div><strong>BOTÁNICOSRP</strong><small>CASINO CLUB · HC</small></div></div>
- <div class="header-right"><div class="balance-pill">◈ <span id="header-balance">20.000</span> HC</div><button class="icon-btn" onclick="openProfile()">♙ Perfil</button></div>
+  <div class="logo">🌿 Casino BotánicosRP</div>
+  <p>Un mundo de juegos y fichas virtuales</p>
+  <div class="balance">🪙 <span id="balance">20.000</span> HC</div>
 </header>
-<main>
-<section class="hero">
- <div><div class="eyebrow">✦ La suerte crece aquí ✦</div><h1>Bienvenido a <span>BotánicosRP</span></h1><p>Un casino virtual para tu roleplay. Prueba tu estrategia en la ruleta, las tragaperras y el blackjack usando únicamente monedas ficticias HC.</p></div>
- <div class="hero-card"><div class="eyebrow">Tu cartera virtual</div><div class="big">◈ <span id="hero-balance">20.000</span> HC</div><div style="color:var(--muted);font-size:12px">Saldo de demostración · sin valor real</div><div class="hero-stats"><div class="mini-stat"><small>PARTIDAS</small><b id="hero-plays">0</b></div><div class="mini-stat"><small>GANADAS</small><b id="hero-wins">0</b></div><div class="mini-stat"><small>RACHA</small><b id="hero-streak">0</b></div></div></div>
-</section>
-<div class="section-title"><div><h2>Salón de juegos</h2><p>Elige tu mesa y juega con monedas HC.</p></div><span class="tag">3 JUEGOS</span></div>
-<section class="game-grid">
- <article class="game-card"><div class="game-art">🎡</div><div class="game-body"><h3>Ruleta europea</h3><p>Elige varios números, define una apuesta por número y gira del 0 al 36.</p><div class="game-footer"><span class="tag">PAGO 36:1</span><button class="primary" onclick="openGame('roulette')">JUGAR</button></div></div></article>
- <article class="game-card"><div class="game-art">🎰</div><div class="game-body"><h3>Tragaperras</h3><p>Tres rodillos, símbolos y premios virtuales.</p><div class="game-footer"><span class="tag">3 RODILLOS</span><button class="primary" onclick="openGame('slots')">JUGAR</button></div></div></article>
- <article class="game-card"><div class="game-art">🂡</div><div class="game-body"><h3>Blackjack</h3><p>Acércate a 21 sin pasarte. Pide cartas o plántate.</p><div class="game-footer"><span class="tag">OBJETIVO 21</span><button class="primary" onclick="openGame('blackjack')">JUGAR</button></div></div></article>
-</section>
-<section class="content-grid">
- <div class="panel"><h3>◈ Tus estadísticas</h3><div class="stats-grid">
- <div class="statbox"><small>PARTIDAS</small><b id="stat-plays">0</b></div><div class="statbox"><small>VICTORIAS</small><b id="stat-wins">0</b></div><div class="statbox"><small>DERROTAS</small><b id="stat-losses">0</b></div>
- <div class="statbox"><small>BENEFICIO NETO</small><b id="stat-net">0 HC</b></div><div class="statbox"><small>MEJOR PREMIO</small><b id="stat-best">0 HC</b></div><div class="statbox"><small>VICTORIAS %</small><b id="stat-rate">0%</b></div>
- </div><div class="notice">HC son puntos ficticios locales: no se compran, venden ni retiran como dinero.</div></div>
- <div class="panel"><h3>♜ Ranking de ejemplo</h3>
- <div class="rank-row"><div class="rank-number">1</div><div class="rank-name">🌿 Don Roble<small>Veterano del club</small></div><div class="rank-value">58.420 HC</div></div>
- <div class="rank-row"><div class="rank-number">2</div><div class="rank-name">🍃 LunaVerde<small>Maestra de la ruleta</small></div><div class="rank-value">46.800 HC</div></div>
- <div class="rank-row"><div class="rank-number">3</div><div class="rank-name">🌱 Sr. Helecho<small>Asiduo del salón</small></div><div class="rank-value">31.250 HC</div></div>
- <div class="rank-row"><div class="rank-number">4</div><div class="rank-name">♧ Tú<small>Perfil local</small></div><div class="rank-value" id="rank-balance">20.000 HC</div></div>
- <p style="font-size:11px;color:var(--muted)">Los otros perfiles son ficticios y solo sirven como ejemplo visual.</p></div>
-</section>
-<footer>BOTÁNICOSRP · CASINO VIRTUAL DE ROLEPLAY · MONEDAS HC FICTICIAS</footer>
-</main>
 
-<div class="modal" id="game-modal" role="dialog" aria-modal="true" onclick="backdropClose(event)">
- <div class="modal-box"><div class="modal-head"><h2 id="modal-title">Juego</h2><button class="close" onclick="closeModal()">×</button></div><div id="game-content"></div></div>
-</div>
-<div class="modal" id="profile-modal" role="dialog" aria-modal="true" onclick="profileBackdropClose(event)">
- <div class="modal-box" style="max-width:480px"><div class="modal-head"><h2>Perfil de visitante</h2><button class="close" onclick="closeProfile()">×</button></div>
- <div class="panel"><div style="font-size:35px;text-align:center">♧</div><h3 style="text-align:center">Visitante Botánico</h3><p style="text-align:center;color:var(--muted);font-size:12px">Guardado en este navegador</p>
- <p>Saldo: <b id="profile-balance">20.000 HC</b></p><p>Partidas: <b id="profile-plays">0</b></p><p>Victorias: <b id="profile-wins">0</b></p><p>Mejor premio: <b id="profile-best">0 HC</b></p>
- <button class="secondary" onclick="resetDemo()">Reiniciar demo</button> <button class="primary" onclick="closeProfile()">Listo</button></div>
- <div class="notice">Reiniciar devuelve el saldo a 20.000 HC y borra las estadísticas.</div></div>
-</div>
+<nav>
+  <button class="active" data-view="home">🏡 Inicio</button>
+  <button data-view="snow">❄️ Nieve</button>
+  <button data-view="fruit">🍒 Frutas</button>
+  <button data-view="classic">🎡 Ruleta clásica</button>
+  <button data-view="special">✨ Ruleta x</button>
+  <button data-view="blackjack">🃏 Blackjack</button>
+</nav>
+
+<main>
+<section class="view active" id="home">
+  <h1>Bienvenido a BotánicosRP</h1>
+  <p class="muted">Elige un juego. Todos los HC son virtuales y no tienen valor monetario.</p>
+  <div class="grid">
+    <article class="card game-card"><div class="art snow">❄️☃️🧊</div><h3>Cumbre Helada</h3><p class="muted">Tragaperras de nieve.</p><button class="btn" onclick="show('snow')">Abrir juego</button></article>
+    <article class="card game-card"><div class="art fruit">🍒🍋🍉</div><h3>Huerto Dorado</h3><p class="muted">Tragaperras de frutas.</p><button class="btn gold" onclick="show('fruit')">Abrir juego</button></article>
+    <article class="card game-card"><div class="art">🎡🔴⚫</div><h3>Ruleta clásica</h3><p class="muted">Elige números y apuesta por cada uno.</p><button class="btn" onclick="show('classic')">Abrir juego</button></article>
+    <article class="card game-card"><div class="art goldart">✨🎯🔢</div><h3>Ruleta multiplicadora</h3><p class="muted">Los multiplicadores cambian en cada tirada.</p><button class="btn gold" onclick="show('special')">Abrir juego</button></article>
+    <article class="card game-card"><div class="art">🂡🃏♠️</div><h3>Blackjack</h3><p class="muted">Pide cartas o plántate.</p><button class="btn" onclick="show('blackjack')">Abrir juego</button></article>
+  </div>
+  <div class="card"><h3>📊 Perfil local</h3><p>Partidas jugadas: <b id="games">0</b></p><p class="muted">El saldo se guarda en este navegador.</p><button class="btn secondary" onclick="resetAll()">Reiniciar demostración</button></div>
+</section>
+
+<section class="view" id="snow">
+  <div class="card">
+    <h1>❄️ Cumbre Helada</h1>
+    <p class="muted">Tres símbolos iguales: premio ×8. Dos iguales: ×1,5.</p>
+    <div class="reels"><div class="reel ice" id="s0">❄️</div><div class="reel ice" id="s1">☃️</div><div class="reel ice" id="s2">🧊</div></div>
+    <div class="field"><label>Apuesta de la tirada (HC)</label><input id="snowBet" type="number" min="1" value="100"></div>
+    <div class="controls"><button class="btn" onclick="slots('snow')">❄️ GIRAR</button></div>
+    <div class="result" id="snowResult">¡Bienvenido a la montaña helada!</div>
+  </div>
+</section>
+
+<section class="view" id="fruit">
+  <div class="card">
+    <h1>🍒 Huerto Dorado</h1>
+    <p class="muted">Tres frutas iguales: premio ×10. Dos iguales: ×1,5.</p>
+    <div class="reels"><div class="reel fruitreel" id="f0">🍒</div><div class="reel fruitreel" id="f1">🍋</div><div class="reel fruitreel" id="f2">🍉</div></div>
+    <div class="field"><label>Apuesta de la tirada (HC)</label><input id="fruitBet" type="number" min="1" value="100"></div>
+    <div class="controls"><button class="btn gold" onclick="slots('fruit')">🍒 GIRAR</button></div>
+    <div class="result" id="fruitResult">¡Gira los rodillos del huerto!</div>
+  </div>
+</section>
+
+<section class="view" id="classic">
+  <div class="card">
+    <h1>🎡 Ruleta clásica</h1>
+    <p class="muted">Selecciona números del 0 al 36. El premio por acertar es ×36 de la apuesta correspondiente, incluida la apuesta devuelta.</p>
+    <div class="field"><label>HC por cada número seleccionado</label><input id="classicBet" type="number" min="1" value="100"></div>
+    <div class="controls"><button class="btn secondary" onclick="clearNumbers('classic')">Limpiar selección</button><span id="classicCount" class="muted">0 números</span></div>
+    <div id="classicBoard" class="numbers"></div>
+    <button class="btn" onclick="spinRoulette('classic')">🎡 GIRAR RULETA</button>
+    <div class="result" id="classicResult">Selecciona tus números.</div>
+  </div>
+</section>
+
+<section class="view" id="special">
+  <div class="card">
+    <h1>✨ Ruleta multiplicadora</h1>
+    <p class="muted">Funciona como la ruleta clásica: eliges tus números y la cantidad por número. En cada tirada se genera un multiplicador aleatorio para cada número y sale un solo ganador. Los multiplicadores nuevos se muestran antes del resultado.</p>
+    <div class="field"><label>HC por cada número seleccionado</label><input id="specialBet" type="number" min="1" value="100"></div>
+    <div class="controls"><button class="btn secondary" onclick="clearNumbers('special')">Limpiar selección</button><span id="specialCount" class="muted">0 números</span></div>
+    <div id="specialBoard" class="numbers"></div>
+    <button class="btn gold" onclick="spinRoulette('special')">✨ GIRAR RULETA</button>
+    <div class="result" id="specialResult">Elige tus números. Los multiplicadores cambian en cada tirada.</div>
+    <p class="muted">Multiplicadores posibles: ×2, ×3, ×5 y ×10. El premio incluye la apuesta ganadora. En esta versión, cada número tiene la misma probabilidad de salir.</p>
+  </div>
+</section>
+
+<section class="view" id="blackjack">
+  <div class="card">
+    <h1>🃏 Blackjack</h1>
+    <p class="muted">Acércate a 21 sin pasarte. El crupier pide cartas hasta llegar a 17.</p>
+    <div class="field"><label>Apuesta (HC)</label><input id="bjBet" type="number" min="1" value="100"></div>
+    <button class="btn" id="bjStart" onclick="startBJ()">Repartir</button>
+    <h3 style="margin-top:20px">Tus cartas <span id="playerScore"></span></h3>
+    <div class="hand" id="playerHand"></div>
+    <h3>Crupier <span id="dealerScore"></span></h3>
+    <div class="hand" id="dealerHand"></div>
+    <div class="controls"><button class="btn" id="hitBtn" onclick="hit()" disabled>Pedir carta</button><button class="btn gold" id="standBtn" onclick="stand()" disabled>Plantarse</button></div>
+    <div class="result" id="bjResult">Pulsa Repartir para empezar.</div>
+  </div>
+</section>
+</main>
+<footer>Casino BotánicosRP · Solo fichas ficticias HC · Sin dinero real ni retiradas.</footer>
+
 <script>
-const START_BALANCE=20000, STORAGE_KEY='botanicosrp_casino_v1';
-const defaults=()=>({balance:START_BALANCE,plays:0,wins:0,losses:0,net:0,best:0,streak:0});
-let state=loadState(),currentGame='',roulettePicks=[],rouletteBusy=false,slotsBusy=false,bj=null;
-function loadState(){try{let s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(s&&Number.isFinite(s.balance)&&s.balance>=0)return {...defaults(),...s}}catch(e){}return defaults()}
-function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
-function fmt(n){return Math.round(n).toLocaleString('es-ES')}
-function update(){
- state.balance=Math.max(0,Math.floor(state.balance));saveState();
- const set=(id,v)=>{let e=document.getElementById(id);if(e)e.textContent=v};
- set('header-balance',fmt(state.balance));set('hero-balance',fmt(state.balance));set('hero-plays',state.plays);set('hero-wins',state.wins);set('hero-streak',state.streak);
- set('stat-plays',state.plays);set('stat-wins',state.wins);set('stat-losses',state.losses);set('stat-net',(state.net>0?'+':'')+fmt(state.net)+' HC');set('stat-best',fmt(state.best)+' HC');set('stat-rate',(state.plays?Math.round(state.wins/state.plays*100):0)+'%');
- set('rank-balance',fmt(state.balance)+' HC');set('profile-balance',fmt(state.balance)+' HC');set('profile-plays',state.plays);set('profile-wins',state.wins);set('profile-best',fmt(state.best)+' HC');
+const INITIAL=20000;
+let state=loadState();
+let picks={classic:new Set(),special:new Set()};
+let bj={player:[],dealer:[],active:false,bet:0};
+const $=id=>document.getElementById(id);
+
+function loadState(){
+ try{
+  const s=JSON.parse(localStorage.getItem('botanicosrp_v2'));
+  if(s && Number.isFinite(s.balance) && s.balance>=0) return s;
+ }catch(e){}
+ return {balance:INITIAL,games:0};
 }
-function openGame(game){
- currentGame=game;roulettePicks=[];rouletteBusy=false;slotsBusy=false;bj=null;
- const names={roulette:'Ruleta europea',slots:'Tragaperras',blackjack:'Blackjack'};
- document.getElementById('modal-title').textContent=names[game];document.getElementById('game-modal').classList.add('open');
- if(game==='roulette')renderRoulette();if(game==='slots')renderSlots();if(game==='blackjack')renderBlackjack();
+function save(){
+ try{localStorage.setItem('botanicosrp_v2',JSON.stringify(state))}catch(e){}
+ $('balance').textContent=Math.floor(state.balance).toLocaleString('es-ES');
+ $('games').textContent=state.games;
 }
-function closeModal(){document.getElementById('game-modal').classList.remove('open')}
-function backdropClose(e){if(e.target.id==='game-modal')closeModal()}
-function openProfile(){update();document.getElementById('profile-modal').classList.add('open')}
-function closeProfile(){document.getElementById('profile-modal').classList.remove('open')}
-function profileBackdropClose(e){if(e.target.id==='profile-modal')closeProfile()}
-function resetDemo(){if(!confirm('¿Reiniciar saldo y estadísticas de la demo?'))return;state=defaults();update();closeProfile()}
-function gameMessage(text,type=''){const el=document.getElementById('game-message');if(el){el.textContent=text;el.className='game-message '+type}}
-function betValue(){const el=document.getElementById('bet');const n=Math.floor(Number(el?.value));return Number.isFinite(n)&&n>0?n:0}
-function setBet(n){const el=document.getElementById('bet');if(el)el.value=n;updateRouletteSummary()}
-function settle(won,profit,bestPrize=0){
- state.plays++;if(won){state.wins++;state.streak++;state.best=Math.max(state.best,bestPrize||profit)}else{state.losses++;state.streak=0}
- state.net+=profit;update();
+function show(id){
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-const reds=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-function renderRoulette(){
- document.getElementById('game-content').innerHTML=`
- <div class="game-layout"><div><div class="roulette-top"><div><div class="roulette-wheel" id="roulette-wheel"><div class="wheel-inner" id="wheel-number">0</div></div><p class="slot-caption" style="text-align:center">Ruleta europea · 0–36</p></div>
- <div class="sidebox"><h4>Tu apuesta</h4><label class="field-label">HC por cada número seleccionado</label><input class="input" id="bet" type="number" min="1" value="100" oninput="updateRouletteSummary()">
- <div class="quick-bets"><button onclick="setBet(50)">50</button><button onclick="setBet(100)">100</button><button onclick="setBet(250)">250</button><button onclick="setBet(500)">500</button><button onclick="setBet(1000)">1.000</button></div>
- <div class="roulette-summary" id="roulette-summary"></div><div class="roulette-actions"><button class="primary" id="spin-button" style="width:100%" onclick="spinRoulette()">GIRAR RULETA</button><button class="secondary" style="width:100%" onclick="clearRoulettePicks()">Limpiar selección</button></div><div id="game-message" class="game-message">Selecciona números en el tablero.</div></div></div>
- <div class="section-title"><div><h2 style="font-size:16px">Tablero de números</h2><p>Toca un número para seleccionarlo o quitarlo.</p></div></div><div class="roulette-board" id="roulette-board"></div></div>
- <aside class="sidebox"><h4>Reglas rápidas</h4><p style="font-size:12px;line-height:1.7;color:var(--muted)">• Selecciona varios números.<br>• La cantidad introducida se apuesta en cada número.<br>• Si sale un número seleccionado, ese número paga 36 veces su apuesta.<br>• Se descuenta la apuesta total antes del giro.</p><div class="notice">Solo monedas ficticias HC, sin valor real.</div></aside></div>`;
- renderRouletteBoard();updateRouletteSummary();
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+function resetAll(){
+ if(!confirm('¿Reiniciar el saldo y las estadísticas de demostración?'))return;
+ state={balance:INITIAL,games:0};save();
 }
-function renderRouletteBoard(){
- const board=document.getElementById('roulette-board');if(!board)return;board.innerHTML='';
- for(let n=0;n<=36;n++){const b=document.createElement('button');b.className='roulette-number '+(n===0?'zero':reds.has(n)?'red':'black')+(roulettePicks.includes(n)?' selected':'');b.textContent=n;b.setAttribute('aria-pressed',roulettePicks.includes(n));b.onclick=()=>toggleRouletteNumber(n);board.appendChild(b)}
+function validBet(id){
+ const n=Number($(id).value);
+ if(!Number.isSafeInteger(n)||n<1){alert('Introduce una apuesta entera mayor que cero.');return null}
+ return n;
 }
-function toggleRouletteNumber(n){if(rouletteBusy)return;roulettePicks=roulettePicks.includes(n)?roulettePicks.filter(x=>x!==n):[...roulettePicks,n];renderRouletteBoard();updateRouletteSummary()}
-function clearRoulettePicks(){if(rouletteBusy)return;roulettePicks=[];renderRouletteBoard();updateRouletteSummary();gameMessage('Selección limpiada.')}
-function updateRouletteSummary(){
- const el=document.getElementById('roulette-summary');if(!el)return;const bet=betValue(),total=bet*roulettePicks.length;
- el.innerHTML=`<b>Números:</b> ${roulettePicks.length?roulettePicks.slice().sort((a,b)=>a-b).join(', '):'ninguno'}<br><b>Apuesta por número:</b> ${fmt(bet)} HC<br><b>Total a descontar:</b> <b style="color:var(--gold2)">${fmt(total)} HC</b><br><b>Premio si aciertas:</b> ${roulettePicks.length&&bet?fmt(bet*36)+' HC':'—'}`;
- const btn=document.getElementById('spin-button');if(btn)btn.disabled=rouletteBusy||!roulettePicks.length||!bet||total>state.balance;
+function payCost(total){
+ if(total>state.balance){alert('No tienes suficientes HC virtuales para esa apuesta.');return false}
+ state.balance-=total;return true;
 }
-async function spinRoulette(){
- if(rouletteBusy)return;const bet=betValue(),total=bet*roulettePicks.length;
- if(!roulettePicks.length){gameMessage('Selecciona al menos un número.','lose');return}
- if(!Number.isSafeInteger(bet)||bet<1){gameMessage('Introduce una cantidad válida.','lose');return}
- if(!Number.isSafeInteger(total)||total>state.balance){gameMessage('No tienes suficientes HC para cubrir la apuesta total.','lose');return}
- rouletteBusy=true;document.getElementById('spin-button').disabled=true;state.balance-=total;update();
- document.getElementById('roulette-wheel').style.transform=`rotate(${1440+Math.floor(Math.random()*360)}deg)`;gameMessage('La ruleta está girando…');
- await new Promise(r=>setTimeout(r,2600));const result=Math.floor(Math.random()*37);document.getElementById('wheel-number').textContent=result;
- const won=roulettePicks.includes(result);let profit=-total;
- if(won){const payout=bet*36;state.balance+=payout;profit=payout-total;gameMessage(`¡Ha salido el ${result}! Premio: ${fmt(payout)} HC. Beneficio neto: ${profit>=0?'+':''}${fmt(profit)} HC.`,'win')}
- else gameMessage(`Ha salido el ${result}. No has acertado. Resultado: −${fmt(total)} HC.`,'lose');
- settle(won,profit,won?bet*36:0);rouletteBusy=false;updateRouletteSummary();
+function finishGame(){state.games++;save()}
+function result(id,msg){$(id).textContent=msg}
+function rand(n){return Math.floor(Math.random()*n)}
+function choice(arr){return arr[rand(arr.length)]}
+
+function slots(kind){
+ const prefix=kind==='snow'?'s':'f';
+ const bet=validBet(kind==='snow'?'snowBet':'fruitBet');
+ if(bet===null)return;
+ if(!payCost(bet))return;
+ const symbols=kind==='snow'?['❄️','☃️','🧊','⛷️','🌨️','🏔️']:['🍒','🍋','🍉','🍇','🍊','🍓'];
+ const out=[choice(symbols),choice(symbols),choice(symbols)];
+ out.forEach((s,i)=>$(prefix+i).textContent=s);
+ const counts={};
+ out.forEach(s=>counts[s]=(counts[s]||0)+1);
+ let mult=0;
+ if(out[0]===out[1]&&out[1]===out[2])mult=kind==='snow'?8:10;
+ else if(Object.values(counts).some(n=>n===2))mult=1.5;
+ const prize=Math.floor(bet*mult);
+ state.balance+=prize;finishGame();
+ result(kind+'Result',`${out.join('  ')}\n${mult?'¡Combinación! Premio total: '+prize.toLocaleString('es-ES')+' HC (×'+mult+').':'Sin combinación ganadora. Has gastado '+bet+' HC.'}`);
 }
-const symbols=['🍀','🍒','💎','🌿','🔔','7️⃣','🌙'];
-function renderSlots(){
- document.getElementById('game-content').innerHTML=`
- <div class="game-layout"><div><div class="slot-machine"><div class="eyebrow">Botánicos lucky reels</div><h2>Gira y combina</h2><div class="slot-reels"><div class="reel" id="reel1">🍀</div><div class="reel" id="reel2">💎</div><div class="reel" id="reel3">🔔</div></div><div class="slot-caption">Tres símbolos iguales: premio principal</div><div class="result-big" id="slot-result">—</div></div><div id="game-message" class="game-message">Elige tu apuesta y gira.</div></div>
- <aside class="sidebox"><h4>Configuración</h4><label class="field-label">Apuesta por giro (HC)</label><input class="input" id="bet" type="number" min="1" value="100"><div class="quick-bets"><button onclick="setBet(50)">50</button><button onclick="setBet(100)">100</button><button onclick="setBet(250)">250</button><button onclick="setBet(500)">500</button></div><button class="primary" id="slot-button" style="width:100%;margin-top:14px" onclick="spinSlots()">GIRAR</button><h4 style="margin-top:20px">Tabla de premios</h4><p style="font-size:12px;line-height:1.8;color:var(--muted)">7️⃣ 7️⃣ 7️⃣ · 10×<br>💎 💎 💎 · 6×<br>Otros tríos · 4×<br>Dos iguales · 1,5×<br>Sin combinación · 0×</p></aside></div>`;
+
+function colorNumber(n){
+ if(n===0)return 'zero';
+ return [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(n)?'red':'black';
 }
-async function spinSlots(){
- if(slotsBusy)return;const bet=betValue();if(!Number.isSafeInteger(bet)||bet<1){gameMessage('Introduce una apuesta válida.','lose');return}if(bet>state.balance){gameMessage('No tienes suficientes HC.','lose');return}
- slotsBusy=true;document.getElementById('slot-button').disabled=true;state.balance-=bet;update();const reels=[1,2,3].map(n=>document.getElementById('reel'+n));
- for(let i=0;i<12;i++){reels.forEach(el=>el.textContent=symbols[Math.floor(Math.random()*symbols.length)]);await new Promise(r=>setTimeout(r,90))}
- const result=Array.from({length:3},()=>symbols[Math.floor(Math.random()*symbols.length)]);result.forEach((s,i)=>reels[i].textContent=s);
- let mult=0;if(result.every(s=>s===result[0]))mult=result[0]==='7️⃣'?10:result[0]==='💎'?6:4;else if(new Set(result).size===2)mult=1.5;
- const payout=Math.floor(bet*mult);state.balance+=payout;const profit=payout-bet;document.getElementById('slot-result').textContent=payout?'+'+fmt(payout)+' HC':'0 HC';
- gameMessage(mult?`¡Combinación! Premio ${fmt(payout)} HC. Beneficio neto: ${profit>=0?'+':''}${fmt(profit)} HC.`:`No hubo combinación. Resultado: −${fmt(bet)} HC.`,mult?'win':'lose');
- settle(mult>0,profit,payout);slotsBusy=false;document.getElementById('slot-button').disabled=false;
+function createBoards(){
+ for(const mode of ['classic','special']){
+  const board=$(mode+'Board');
+  board.innerHTML='';
+  for(let n=0;n<=36;n++){
+   const b=document.createElement('button');
+   b.className='num '+colorNumber(n);
+   b.id=mode+'n'+n;
+   b.textContent=n;
+   b.onclick=()=>toggleNumber(mode,n);
+   board.appendChild(b);
+  }
+  renderNumbers(mode);
+ }
 }
-const ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K'],suits=['♠','♥','♦','♣'];
-function newCard(){const rank=ranks[Math.floor(Math.random()*ranks.length)],suit=suits[Math.floor(Math.random()*suits.length)];return {rank,suit,value:rank==='A'?11:['J','Q','K'].includes(rank)?10:Number(rank)}}
-function handValue(hand){let total=hand.reduce((s,c)=>s+c.value,0),aces=hand.filter(c=>c.rank==='A').length;while(total>21&&aces){total-=10;aces--}return total}
-function cardHtml(c){return `<div class="playing-card ${c.suit==='♥'||c.suit==='♦'?'red-suit':''}"><span>${c.rank}${c.suit}</span><span>${c.rank}${c.suit}</span></div>`}
-function renderBlackjack(){
- document.getElementById('game-content').innerHTML=`
- <div class="game-layout"><div class="panel blackjack-area"><div class="eyebrow">Mesa 21</div><div class="bj-hand"><h4>Banca <span id="dealer-score"></span></h4><div class="cards" id="dealer-cards"></div></div><hr style="border:0;border-top:1px solid var(--line)"><div class="bj-hand"><h4>Tú <span id="player-score"></span></h4><div class="cards" id="player-cards"></div></div><div id="game-message" class="game-message">Introduce tu apuesta y reparte.</div><div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="primary" id="deal-button" onclick="dealBlackjack()">REPARTIR</button><button class="secondary" id="hit-button" onclick="hitBlackjack()" disabled>PEDIR CARTA</button><button class="secondary" id="stand-button" onclick="standBlackjack()" disabled>PLANTARSE</button></div></div>
- <aside class="sidebox"><h4>Apuesta</h4><label class="field-label">HC por mano</label><input class="input" id="bet" type="number" min="1" value="100"><div class="quick-bets"><button onclick="setBet(50)">50</button><button onclick="setBet(100)">100</button><button onclick="setBet(250)">250</button><button onclick="setBet(500)">500</button></div><div class="notice">Blackjack natural paga 3:2. Victoria normal paga 1:1. Empate: recuperas la apuesta.</div></aside></div>`;
+function toggleNumber(mode,n){
+ const set=picks[mode];
+ if(set.has(n))set.delete(n);
+ else set.add(n);
+ renderNumbers(mode);
 }
-function drawHand(hand,hideFirst=false){return hand.map((c,i)=>hideFirst&&i===0?'<div class="playing-card"><span>✦</span><span>?</span></div>':cardHtml(c)).join('')}
-function renderBJ(hideDealer=false){document.getElementById('dealer-cards').innerHTML=drawHand(bj.dealer,hideDealer);document.getElementById('player-cards').innerHTML=drawHand(bj.player);document.getElementById('dealer-score').textContent=hideDealer?'':`(${handValue(bj.dealer)})`;document.getElementById('player-score').textContent=`(${handValue(bj.player)})`}
-function dealBlackjack(){
- if(bj?.active)return;const bet=betValue();if(!Number.isSafeInteger(bet)||bet<1){gameMessage('Introduce una apuesta válida.','lose');return}if(bet>state.balance){gameMessage('No tienes suficientes HC.','lose');return}
- state.balance-=bet;update();bj={bet,player:[newCard(),newCard()],dealer:[newCard(),newCard()],active:true};
- document.getElementById('deal-button').disabled=true;document.getElementById('hit-button').disabled=false;document.getElementById('stand-button').disabled=false;renderBJ(true);
- if(handValue(bj.player)===21){finishBlackjack();return}gameMessage('Tu turno: pide carta o plántate.');
+function clearNumbers(mode){picks[mode].clear();renderNumbers(mode)}
+function renderNumbers(mode){
+ for(let n=0;n<=36;n++){
+  const b=$(mode+'n'+n);
+  if(!b)continue;
+  b.classList.toggle('selected',picks[mode].has(n));
+  b.innerHTML=String(n);
+  if(mode==='special'){
+   const m=b.dataset.mult;
+   if(m)b.innerHTML=n+'<span class="mult">×'+m+'</span>';
+  }
+ }
+ $(mode+'Count').textContent=mode==='special'?picks[mode].size+' números seleccionados':' '+picks[mode].size+' números seleccionados';
 }
-function hitBlackjack(){if(!bj?.active)return;bj.player.push(newCard());renderBJ(true);const v=handValue(bj.player);if(v>21)finishBlackjack();else if(v===21)standBlackjack();else gameMessage(`Tienes ${v}. ¿Pides otra carta o te plantas?`)}
-function standBlackjack(){if(!bj?.active)return;while(handValue(bj.dealer)<17)bj.dealer.push(newCard());finishBlackjack()}
-function finishBlackjack(){
- if(!bj?.active)return;bj.active=false;const p=handValue(bj.player),d=handValue(bj.dealer),bet=bj.bet;let payout=0,won=false,msg='';
- const natural=bj.player.length===2&&p===21;
- if(p>21)msg=`Te pasaste con ${p}. Pierdes ${fmt(bet)} HC.`;
- else if(d>21||p>d){payout=natural?Math.floor(bet*2.5):bet*2;won=true;msg=`¡Victoria! Tú ${p}, banca ${d}. Premio: ${fmt(payout)} HC.`}
- else if(p===d){payout=bet;msg=`Empate a ${p}. Recuperas ${fmt(bet)} HC.`}
- else msg=`La banca gana (${d} frente a ${p}). Pierdes ${fmt(bet)} HC.`;
- state.balance+=payout;const profit=payout-bet;renderBJ(false);gameMessage(msg,won?'win':payout?'':'lose');settle(won,profit,payout);
- document.getElementById('deal-button').disabled=false;document.getElementById('hit-button').disabled=true;document.getElementById('stand-button').disabled=true;
+function spinRoulette(mode){
+ const set=picks[mode];
+ if(!set.size){alert('Selecciona al menos un número.');return}
+ const bet=validBet(mode==='classic'?'classicBet':'specialBet');
+ if(bet===null)return;
+ const total=bet*set.size;
+ if(!Number.isSafeInteger(total)){alert('La apuesta total es demasiado grande.');return}
+ if(!payCost(total))return;
+
+ let multipliers={};
+ if(mode==='special'){
+  for(let n=0;n<=36;n++)multipliers[n]=choice([2,2,2,3,3,5,10]);
+  for(let n=0;n<=36;n++)$('specialn'+n).innerHTML=n+'<span class="mult">×'+multipliers[n]+'</span>';
+ }
+ const winner=rand(37);
+ let prize=0;
+ if(set.has(winner))prize=mode==='classic'?bet*36:bet*multipliers[winner];
+ state.balance+=prize;
+ finishGame();
+ const color=winner===0?'verde':colorNumber(winner)==='red'?'rojo':'negro';
+ if(mode==='classic'){
+  result('classicResult',`🎡 Ha salido el ${winner} (${color}). ${set.has(winner)?'¡Acierto! Premio total: '+prize.toLocaleString('es-ES')+' HC (×36).':'No has acertado. Apostaste '+total.toLocaleString('es-ES')+' HC.'}`);
+ }else{
+  const mult=multipliers[winner];
+  result('specialResult',`✨ Ha salido el ${winner} (${color}), con multiplicador ×${mult}.\n${set.has(winner)?'¡Has acertado! Premio total: '+prize.toLocaleString('es-ES')+' HC.':'No has acertado esta tirada. Apostaste '+total.toLocaleString('es-ES')+' HC.'}\nLos multiplicadores cambiarán de nuevo en la próxima tirada.`);
+ }
+ renderNumbers(mode);
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeProfile()}});
-update();
+
+function newCard(){
+ const rank=choice(['A','2','3','4','5','6','7','8','9','10','J','Q','K']);
+ const suit=choice(['♠','♥','♦','♣']);
+ return {rank,suit};
+}
+function cardValue(c){if(['J','Q','K'].includes(c.rank))return 10;if(c.rank==='A')return 11;return Number(c.rank)}
+function score(hand){
+ let total=hand.reduce((s,c)=>s+cardValue(c),0);
+ let aces=hand.filter(c=>c.rank==='A').length;
+ while(total>21&&aces>0){total-=10;aces--}
+ return total;
+}
+function drawHand(id,hand,hideFirst=false){
+ const box=$(id);box.innerHTML='';
+ hand.forEach((c,i)=>{
+  const d=document.createElement('div');d.className='playcard';
+  if(hideFirst&&i===0){d.innerHTML='🂠<small>Oculta</small>'}
+  else{
+   const red=['♥','♦'].includes(c.suit);
+   d.style.color=red?'#c02f39':'#17241a';
+   d.innerHTML=c.rank+c.suit+'<small>'+({A:'As',J:'Jota',Q:'Reina',K:'Rey'}[c.rank]||c.rank)+'</small>';
+  }
+  box.appendChild(d);
+ });
+}
+function updateBJ(hide=true){
+ drawHand('playerHand',bj.player);
+ drawHand('dealerHand',bj.dealer,hide&&bj.active);
+ $('playerScore').textContent='('+score(bj.player)+')';
+ $('dealerScore').textContent=hide&&bj.active?'(?)':'('+score(bj.dealer)+')';
+}
+function startBJ(){
+ if(bj.active)return;
+ const bet=validBet('bjBet');if(bet===null)return;
+ if(!payCost(bet))return;
+ bj={player:[newCard(),newCard()],dealer:[newCard(),newCard()],active:true,bet};
+ $('bjStart').disabled=true;$('hitBtn').disabled=false;$('standBtn').disabled=false;
+ updateBJ(true);result('bjResult','Tu turno: pide carta o plántate.');
+ if(score(bj.player)===21)stand();
+}
+function hit(){
+ if(!bj.active)return;
+ bj.player.push(newCard());updateBJ(true);
+ if(score(bj.player)>21)endBJ('¡Te has pasado de 21! Pierdes la apuesta.',0);
+ else if(score(bj.player)===21)stand();
+}
+function stand(){
+ if(!bj.active)return;
+ while(score(bj.dealer)<17)bj.dealer.push(newCard());
+ updateBJ(false);
+ const p=score(bj.player),d=score(bj.dealer);
+ if(d>21)endBJ('El crupier se pasa. ¡Ganas!',bj.bet*2);
+ else if(p>d)endBJ('¡Tu puntuación es mayor! Premio total: '+bj.bet*2+' HC.',bj.bet*2);
+ else if(p===d)endBJ('Empate: recuperas tu apuesta.',bj.bet);
+ else endBJ('El crupier gana esta ronda.',0);
+}
+function endBJ(msg,prize){
+ state.balance+=prize;bj.active=false;
+ $('bjStart').disabled=false;$('hitBtn').disabled=true;$('standBtn').disabled=true;
+ updateBJ(false);finishGame();result('bjResult',msg+' Premio devuelto: '+prize.toLocaleString('es-ES')+' HC.');
+}
+createBoards();save();
 </script>
 </body>
 </html>
