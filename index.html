@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Casino BotánicosRP: juegos y fichas HC virtuales.">
+<title>BotánicosRP | Golden Club</title>
+<style>
+:root{
+ --bg:#090909;--panel:#121212;--panel2:#191713;
+ --gold:#e9c778;--gold2:#a97c32;--cream:#fff2cf;
+ --text:#f6f1e6;--muted:#a9a397;--line:#3a3020;
+ --green:#254d36;--red:#922f39;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:active:not(:disabled){transform:scale(.98)}
+a{color:var(--gold)}
+::selection{background:var(--gold);color:#111}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 50% -20%,#5e441e33,transparent 58%),radial-gradient(ellipse at 100% 70%,#6a501411,transparent 40%)}
+header{padding:22px 20px 17px;text-align:center;border-bottom:1px solid var(--line);background:#090909ed}
+.brand{font-family:Georgia,serif;font-size:clamp(27px,5vw,43px);letter-spacing:3px;font-weight:700;background:linear-gradient(110deg,#9e762e,#fff0bd,#bd9144);color:transparent;background-clip:text;-webkit-background-clip:text}
+.subtitle{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.topline{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.pill{border:1px solid var(--line);background:#15130f;border-radius:30px;padding:10px 16px;font-size:13px}
+.pill strong{color:var(--gold)}
+nav{position:sticky;top:0;z-index:20;background:#0b0b0bf5;border-bottom:1px solid var(--line);display:flex;gap:6px;padding:10px;overflow-x:auto;backdrop-filter:blur(16px)}
+nav button{flex:0 0 auto;border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 13px;border-radius:8px;font-size:12px;letter-spacing:.3px}
+nav button:hover,nav button.active{color:var(--gold);border-color:#594523;background:#201a10}
+main{width:min(1120px,100%);margin:auto;padding:24px 16px 55px}
+.view{display:none;animation:fadeUp .35s ease both}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shine{0%{background-position:180% 0}100%{background-position:-180% 0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 #e9c77800}50%{box-shadow:0 0 28px #e9c77825}}
+@keyframes roll{0%{transform:translateY(-8px);filter:blur(2px)}50%{transform:translateY(6px);filter:blur(1px)}100%{transform:translateY(0);filter:blur(0)}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes glow{0%,100%{text-shadow:0 0 4px #e9c77822}50%{text-shadow:0 0 22px #e9c77899}}
+.hero{position:relative;overflow:hidden;border:1px solid #574522;border-radius:16px;padding:clamp(26px,6vw,55px);background:linear-gradient(115deg,#1b1710,#0d0d0d 65%);margin-bottom:24px}
+.hero:after{content:"✦";position:absolute;right:7%;top:8%;font-size:100px;color:#d8b15a12;pointer-events:none}
+.eyebrow{color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-size:10px}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:Georgia,serif;font-size:clamp(30px,6vw,51px);font-weight:500;margin:14px 0}
+h2{font-family:Georgia,serif;font-size:27px;font-weight:500}
+h3{font-size:17px}
+p{line-height:1.6}
+.muted{color:var(--muted);font-size:13px}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:25px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:14px}
+.card{background:linear-gradient(145deg,#191713,#101010 75%);border:1px solid var(--line);border-radius:13px;padding:18px;min-width:0}
+.game-card{position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column;gap:10px}
+.game-card:hover{transform:translateY(-4px);border-color:#9d793b;box-shadow:0 12px 35px #0008}
+.art{height:145px;display:grid;place-items:center;border:1px solid #514123;border-radius:9px;background:radial-gradient(ellipse,#3c2b12,#111 70%);font-size:54px;position:relative;overflow:hidden}
+.art:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,#ffffff09 45%,#ffffff17 50%,transparent 65%);background-size:200% 100%;animation:shine 6s linear infinite}
+.art.snow{background:radial-gradient(ellipse,#22495c,#101418 75%);border-color:#3e7183}
+.art.fruit{background:radial-gradient(ellipse,#55251e,#17100d 75%)}
+.art.roulette{background:radial-gradient(ellipse,#4b3515,#111 70%)}
+.art.cards{background:radial-gradient(ellipse,#29382b,#101010 75%)}
+.art span{filter:drop-shadow(0 3px 8px #000)}
+.game-card .btn{margin-top:auto}
+.btn{border:1px solid var(--gold);border-radius:8px;padding:12px 15px;background:linear-gradient(110deg,#b68a3c,#f3d994,#b68a3c);background-size:200% 100%;color:#171109;font-size:12px;font-weight:800;letter-spacing:.6px;transition:filter .2s,box-shadow .2s}
+.btn:hover{filter:brightness(1.13);box-shadow:0 0 20px #e9c77822}
+.btn.secondary{background:#171510;color:var(--gold);border-color:#574522}
+.btn.ghost{background:transparent;color:var(--muted);border-color:#403a2e}
+.btn.danger{background:#301717;color:#ffb6b6;border-color:#633333}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}
+input,select{width:100%;background:#0b0b0b;color:var(--text);border:1px solid #40392d;border-radius:8px;padding:12px}
+input:focus,select:focus{border-color:var(--gold);outline:none}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin:15px 0}
+.result{padding:15px;border:1px solid #42361e;background:#0d0c09;border-radius:9px;margin-top:15px;line-height:1.65;font-size:13px;white-space:pre-line;overflow-wrap:anywhere}
+.result.win{border-color:#907337;color:#ffdf91;animation:pulse .8s ease}
+.result.loss{border-color:#56312b}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.stat{background:#12110e;border:1px solid var(--line);padding:14px;border-radius:10px}
+.stat strong{display:block;color:var(--gold);font-size:21px;margin-bottom:5px}
+.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:16px 0}
+.num{border:1px solid #4b4438;border-radius:6px;min-width:0;padding:9px 0;background:#181818;color:#fff;font-size:12px;font-weight:700;transition:background .15s,border-color .15s}
+.num.red{background:#742a30}.num.black{background:#20201d}.num.zero{background:#21553a}
+.num.selected{outline:2px solid var(--gold);outline-offset:1px;background:#8b6827}
+.mult{display:block;color:#ffdf8a;font-size:9px;margin-top:3px}
+.reels{display:flex;justify-content:center;gap:10px;margin:24px 0}
+.reel{width:29%;max-width:112px;height:108px;display:grid;place-items:center;border:2px solid var(--gold);border-radius:10px;background:linear-gradient(145deg,#fff0c6,#c39b4e);color:#15110a;font-size:clamp(36px,9vw,55px);box-shadow:inset 0 0 18px #0002}
+.reel.ice{background:linear-gradient(145deg,#f0fdff,#78c9e4);border-color:#b5edff}
+.reel.fruitreel{background:linear-gradient(145deg,#ffefb4,#c98232);border-color:#f4d27e}
+.reel.rolling{animation:roll .14s linear infinite}
+.panel-game{max-width:850px;margin:auto}
+.wheel-wrap{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:20px 0}
+.wheel{width:80px;height:80px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;background:conic-gradient(#173d29 0 10%,#a77c30 10% 20%,#173d29 20% 30%,#a77c30 30% 40%,#173d29 40% 50%,#a77c30 50% 60%,#173d29 60% 70%,#a77c30 70% 80%,#173d29 80% 90%,#a77c30 90%);font-size:24px;box-shadow:0 0 25px #d4ad4d18}
+.wheel.rolling{animation:spin .35s linear infinite}
+.hand{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}
+.playcard{width:65px;height:92px;border-radius:8px;background:#f5f0df;color:#191714;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:25px;box-shadow:0 3px 8px #0005;animation:fadeUp .3s ease both}
+.playcard small{font-size:11px;margin-top:5px}
+.history-row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #30291e;font-size:12px}
+.tag{font-size:10px;color:var(--gold);border:1px solid #514123;border-radius:30px;padding:5px 8px}
+footer{border-top:1px solid var(--line);padding:25px 15px;text-align:center;color:var(--muted);font-size:11px;line-height:1.8}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#201b11;border:1px solid var(--gold);color:var(--cream);padding:13px 18px;border-radius:9px;z-index:100;opacity:0;pointer-events:none;transition:.25s;max-width:90%;font-size:12px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:700px){.board{grid-template-columns:repeat(12,minmax(0,1fr))}}
+@media(max-width:450px){main{padding:17px 11px 40px}.hero{padding:25px 19px}.stats{gap:6px}.stat{padding:11px 8px}.stat strong{font-size:17px}.stat span{font-size:9px}.card{padding:14px}.board{gap:4px}.num{padding:10px 0;font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<header>
+  <div class="brand">BOTÁNICOSRP</div>
+  <div class="subtitle">The Golden Club · Edición de lujo</div>
+  <div class="topline">
+    <div class="pill">✦ SALDO <strong id="balance">20.000 HC</strong></div>
+    <div class="pill">♛ PARTIDAS <strong id="games">0</strong></div>
+    <button class="btn secondary" onclick="toggleSound()" id="soundBtn">♫ SONIDO: OFF</button>
+  </div>
+</header>
+<nav>
+  <button class="active" data-view="home">♛ Club</button>
+  <button data-view="snow">❄ Nieve</button>
+  <button data-view="fruit">✿ Frutas</button>
+  <button data-view="classic">◉ Ruleta</button>
+  <button data-view="special">✦ Multiplicadores</button>
+  <button data-view="blackjack">♠ Blackjack</button>
+  <button data-view="profile">▤ Mi perfil</button>
+</nav>
+<main>
+<section class="view active" id="home">
+  <div class="hero">
+    <div class="eyebrow">✦ Una experiencia exclusiva</div>
+    <h1>Bienvenido al<br>Golden Club.</h1>
+    <p class="muted">Una colección de juegos virtuales con una estética inspirada en el lujo clásico. Elige tu mesa, disfruta de las animaciones y juega con tus HC.</p>
+    <div class="btn-row"><button class="btn" onclick="show('classic')">DESCUBRIR LA RULETA ↗</button><button class="btn secondary" onclick="show('profile')">MI ACTIVIDAD</button></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong id="homeBalance">20.000</strong><span>Saldo HC</span></div>
+    <div class="stat"><strong id="homeGames">0</strong><span>Partidas</span></div>
+    <div class="stat"><strong id="homeNet">0</strong><span>Balance neto</span></div>
+  </div>
+  <div class="section-title"><div><div class="eyebrow">La colección</div><h2>Salones de juego</h2></div><span class="tag">5 JUEGOS</span></div>
+  <div class="grid">
+    <article class="card game-card"><div class="art snow"><span>❄️ 🧊 ☃️</span></div><span class="tag">EDICIÓN POLAR</span><h3>Cumbre Helada</h3><p class="muted">Rodillos invernales, cristales y símbolos helados.</p><button class="btn" onclick="show('snow')">ENTRAR AL SALÓN</button></article>
+    <article class="card game-card"><div class="art fruit"><span>🍒 🍋 🍉</span></div><span class="tag">EDICIÓN CLÁSICA</span><h3>Huerto Dorado</h3><p class="muted">Una tragaperras colorida con frutas y combinaciones.</p><button class="btn" onclick="show('fruit')">ENTRAR AL SALÓN</button></article>
+    <article class="card game-card"><div class="art roulette"><span>🎡</span></div><span class="tag">MESA CLÁSICA</span><h3>Ruleta clásica</h3><p class="muted">Selecciona números y define tu apuesta.</p><button class="btn" onclick="show('classic')">ENTRAR A LA MESA</button></article>
+    <article class="card game-card"><div class="art roulette"><span>✦ 🎯 ✦</span></div><span class="tag">MESA ESPECIAL</span><h3>Ruleta multiplicadora</h3><p class="muted">Multiplicadores variables en cada giro.</p><button class="btn" onclick="show('special')">ENTRAR A LA MESA</button></article>
+    <article class="card game-card"><div class="art cards"><span>♠️ A ♥️</span></div><span class="tag">MESA DE CARTAS</span><h3>Blackjack</h3><p class="muted">Pide cartas o plántate ante el crupier.</p><button class="btn" onclick="show('blackjack')">SENTARSE A LA MESA</button></article>
+  </div>
+  <div class="card" style="margin-top:20px"><div class="eyebrow">Última actividad</div><h3 style="margin-top:10px">Historial reciente</h3><div id="homeHistory" class="muted">Todavía no hay partidas registradas.</div></div>
+</section>
+
+<section class="view" id="snow">
+  <div class="panel-game card">
+    <div class="eyebrow">Edición polar · Slot 01</div><h2>Cumbre Helada</h2>
+    <p class="muted">Tres símbolos iguales: premio total ×8. Dos iguales: premio total ×1,5. Los premios incluyen la apuesta.</p>
+    <div class="reels"><div class="reel ice" id="s0">❄️</div><div class="reel ice" id="s1">☃️</div><div class="reel ice" id="s2">🧊</div></div>
+    <div class="fields"><div><label for="snowBet">Apuesta por giro · HC</label><input id="snowBet" type="number" min="1" max="20000" value="100"></div></div>
+    <button class="btn" id="snowSpin" onclick="slots('snow')">❄ GIRAR RODILLOS</button>
+    <div class="result" id="snowResult">Los rodillos esperan tu primera tirada.</div>
+  </div>
+</section>
+
+<section class="view" id="fruit">
+  <div class="panel-game card">
+    <div class="eyebrow">Edición clásica · Slot 02</div><h2>Huerto Dorado</h2>
+    <p class="muted">Tres frutas iguales: premio total ×10. Dos iguales: premio total ×1,5.</p>
+    <div class="reels"><div class="reel fruitreel" id="f0">🍒</div><div class="reel fruitreel" id="f1">🍋</div><div class="reel fruitreel" id="f2">🍉</div></div>
+    <div class="fields"><div><label for="fruitBet">Apuesta por giro · HC</label><input id="fruitBet" type="number" min="1" max="20000" value="100"></div></div>
+    <button class="btn" id="fruitSpin" onclick="slots('fruit')">✿ GIRAR RODILLOS</button>
+    <div class="result" id="fruitResult">El huerto está listo para jugar.</div>
+  </div>
+</section>
+
+<section class="view" id="classic">
+  <div class="panel-game card">
+    <div class="eyebrow">Mesa 01 · Clásica</div><h2>Ruleta clásica</h2>
+    <p class="muted">Selecciona números del 0 al 36. La apuesta indicada se coloca en cada número. Si aciertas, recibes 36 veces la apuesta ganadora, incluida esta.</p>
+    <div class="wheel-wrap"><div class="wheel" id="classicWheel">✦</div><div><div class="eyebrow">ÚLTIMO RESULTADO</div><h2 id="classicLast">—</h2><span class="muted">Un único número ganador por giro.</span></div></div>
+    <div class="fields"><div><label for="classicBet">HC por número</label><input id="classicBet" type="number" min="1" max="20000" value="100"></div></div>
+    <div class="btn-row"><button class="btn secondary" onclick="clearPicks('classic')">LIMPIAR SELECCIÓN</button><span class="tag" id="classicCount">0 números</span></div>
+    <div class="board" id="classicBoard"></div>
+    <button class="btn" id="classicSpin" onclick="spinRoulette('classic')">GIRAR RULETA</button>
+    <div class="result" id="classicResult">Selecciona uno o más números para comenzar.</div>
+  </div>
+</section>
+
+<section class="view" id="special">
+  <div class="panel-game card">
+    <div class="eyebrow">Mesa 02 · Edición especial</div><h2>Ruleta multiplicadora</h2>
+    <p class="muted">Elige tus números igual que en la ruleta clásica. En cada ronda se asignan nuevos multiplicadores aleatorios a todos los números; después sale un único ganador. Si aciertas, el premio corresponde al multiplicador que tenga ese número en esa ronda.</p>
+    <div class="wheel-wrap"><div class="wheel" id="specialWheel">✦</div><div><div class="eyebrow">ÚLTIMO RESULTADO</div><h2 id="specialLast">—</h2><span class="muted">Los multiplicadores cambian cada ronda.</span></div></div>
+    <div class="fields"><div><label for="specialBet">HC por número</label><input id="specialBet" type="number" min="1" max="20000" value="100"></div></div>
+    <div class="btn-row"><button class="btn secondary" onclick="clearPicks('special')">LIMPIAR SELECCIÓN</button><span class="tag" id="specialCount">0 números</span></div>
+    <div class="board" id="specialBoard"></div>
+    <button class="btn" id="specialSpin" onclick="spinRoulette('special')">GIRAR RULETA ESPECIAL</button>
+    <div class="result" id="specialResult">Los multiplicadores se sortearán en tu primera ronda.</div>
+    <p class="muted" style="margin-top:13px">Factores posibles: ×2, ×3, ×5 y ×10. Los números tienen la misma probabilidad de salir; los multiplicadores se sortean por separado. Esta versión es una simulación de entretenimiento.</p>
+  </div>
+</section>
+
+<section class="view" id="blackjack">
+  <div class="panel-game card">
+    <div class="eyebrow">Mesa 03 · Cartas</div><h2>Blackjack</h2>
+    <p class="muted">Intenta acercarte a 21 sin pasarte. Las figuras valen 10 y el as vale 1 u 11.</p>
+    <div class="fields"><div><label for="bjBet">Apuesta · HC</label><input id="bjBet" type="number" min="1" max="20000" value="100"></div></div>
+    <button class="btn" id="bjStart" onclick="startBJ()">REPARTIR CARTAS</button>
+    <hr>
+    <h3>Tu mano <span id="playerScore" class="muted"></span></h3><div class="hand" id="playerHand"></div>
+    <h3>Mano del crupier <span id="dealerScore" class="muted"></span></h3><div class="hand" id="dealerHand"></div>
+    <div class="btn-row"><button class="btn" id="hitBtn" onclick="hit()" disabled>PEDIR CARTA</button><button class="btn secondary" id="standBtn" onclick="stand()" disabled>PLANTARSE</button></div>
+    <div class="result" id="bjResult">Reparte para iniciar una partida.</div>
+  </div>
+</section>
+
+<section class="view" id="profile">
+  <div class="eyebrow">Tu cuenta local</div><h2>Mi perfil</h2>
+  <p class="muted">Tus estadísticas se guardan en el navegador de este dispositivo. No necesitas iniciar sesión.</p>
+  <div class="stats">
+    <div class="stat"><strong id="profileBalance">20.000</strong><span>Saldo HC</span></div>
+    <div class="stat"><strong id="profileGames">0</strong><span>Partidas</span></div>
+    <div class="stat"><strong id="profileNet">0</strong><span>Balance neto</span></div>
+  </div>
+  <div class="card"><h3>Historial de partidas</h3><div id="history"></div></div>
+  <div class="card" style="margin-top:14px"><h3>Opciones</h3><p class="muted">Restablecer devuelve el saldo a 20.000 HC y borra las estadísticas locales.</p><button class="btn danger" onclick="resetDemo()">RESTABLECER DEMOSTRACIÓN</button></div>
+</section>
+</main>
+<footer>BOTÁNICOSRP · GOLDEN CLUB<br>Entretenimiento con fichas ficticias HC. Sin depósitos, dinero real, premios monetarios ni retiradas.<br>Progreso guardado localmente en tu dispositivo.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+const INITIAL=20000,KEY='botanicosrp_gold_v1';
+const $=id=>document.getElementById(id);
+let soundOn=false,audioCtx=null,busy=false;
+let picks={classic:new Set(),special:new Set()};
+let multipliers={};
+let bj={player:[],dealer:[],active:false,bet:0};
+let state=loadState();
+
+function loadState(){
+ try{
+  const s=JSON.parse(localStorage.getItem(KEY));
+  if(s&&Number.isFinite(s.balance)&&s.balance>=0&&Number.isFinite(s.games)&&Array.isArray(s.history))
+   return {balance:s.balance,games:s.games,history:s.history.slice(0,40),net:Number(s.net)||0};
+ }catch(e){}
+ return {balance:INITIAL,games:0,history:[],net:0};
+}
+function persist(){
+ try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+ renderStats();
+}
+function fmt(n){return Math.floor(n).toLocaleString('es-ES')}
+function renderStats(){
+ ['balance','homeBalance','profileBalance'].forEach(id=>{if($(id))$(id).textContent=fmt(state.balance)});
+ ['games','homeGames','profileGames'].forEach(id=>{if($(id))$(id).textContent=fmt(state.games)});
+ ['homeNet','profileNet'].forEach(id=>{if($(id))$(id).textContent=(state.net>0?'+':'')+fmt(state.net)});
+ renderHistory();
+}
+function renderHistory(){
+ const html=state.history.length?state.history.slice(0,8).map(x=>`<div class="history-row"><span>${esc(x.game)} · ${esc(x.detail)}</span><strong style="color:${x.delta>=0?'#e9c778':'#cf8980'}">${x.delta>0?'+':''}${fmt(x.delta)} HC</strong></div>`).join(''):'<p class="muted">Todavía no hay partidas registradas.</p>';
+ if($('history'))$('history').innerHTML=html;
+ if($('homeHistory'))$('homeHistory').innerHTML=html;
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(id){
+ if(bj.active&&id!=='blackjack'){toast('Termina tu mano de blackjack antes de cambiar de mesa.');return}
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+function toast(s){const t=$('toast');t.textContent=s;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2600)}
+function toggleSound(){
+ soundOn=!soundOn;$('soundBtn').textContent='♫ SONIDO: '+(soundOn?'ON':'OFF');
+ if(soundOn)beep(660,.08);
+}
+function beep(freq=440,dur=.08){
+ if(!soundOn)return;
+ try{
+  audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type='sine';o.frequency.value=freq;g.gain.value=.035;
+  o.connect(g);g.connect(audioCtx.destination);o.start();
+  g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
+  o.stop(audioCtx.currentTime+dur);
+ }catch(e){}
+}
+function rand(n){return Math.floor(Math.random()*n)}
+function choice(a){return a[rand(a.length)]}
+function validBet(id){
+ const n=Number($(id).value);
+ if(!Number.isSafeInteger(n)||n<1||n>20000){toast('Introduce una apuesta entera entre 1 y 20.000 HC.');return null}
+ return n;
+}
+function canAfford(total){
+ if(!Number.isSafeInteger(total)||total<1){toast('La apuesta total no es válida.');return false}
+ if(total>state.balance){toast('No tienes suficientes HC para esa apuesta.');return false}
+ return true;
+}
+function record(game,detail,delta){
+ state.games++;state.net+=delta;
+ state.history.unshift({game,detail,delta,time:Date.now()});
+ state.history=state.history.slice(0,40);
+ persist();
+}
+function setResult(id,msg,win=false){
+ const el=$(id);el.textContent=msg;
+ el.classList.toggle('win',win);el.classList.toggle('loss',!win);
+}
+function lockButtons(ids,disabled){ids.forEach(id=>$(id).disabled=disabled)}
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+
+async function slots(kind){
+ if(busy)return;
+ const isSnow=kind==='snow',bet=validBet(isSnow?'snowBet':'fruitBet');
+ if(bet===null)return;
+ if(!canAfford(bet))return;
+ busy=true;
+ const button=$(isSnow?'snowSpin':'fruitSpin');button.disabled=true;
+ state.balance-=bet;persist();
+ const prefix=isSnow?'s':'f';
+ const symbols=isSnow?['❄️','☃️','🧊','⛷️','🌨️','🏔️']:['🍒','🍋','🍉','🍇','🍊','🍓'];
+ for(let i=0;i<3;i++)$(prefix+i).classList.add('rolling');
+ const out=[];
+ for(let i=0;i<3;i++){
+  await wait(350+i*260);
+  out[i]=choice(symbols);
+  $(prefix+i).textContent=out[i];
+  $(prefix+i).classList.remove('rolling');
+  beep(320+i*100);
+ }
+ const counts={};out.forEach(s=>counts[s]=(counts[s]||0)+1);
+ const mult=out.every(s=>s===out[0])?(isSnow?8:10):(Object.values(counts).includes(2)?1.5:0);
+ const prize=Math.floor(bet*mult);state.balance+=prize;
+ const delta=prize-bet;
+ record(isSnow?'Cumbre Helada':'Huerto Dorado',out.join(' '),delta);
+ setResult(isSnow?'snowResult':'fruitResult',mult?'✦ '+out.join('  ')+'\n¡Combinación! Premio total: '+fmt(prize)+' HC (×'+mult+').':'Resultado: '+out.join('  ')+'\nSin combinación ganadora. Resultado de la ronda: -'+fmt(bet)+' HC.',mult>0);
+ if(mult>0)beep(880,.2);
+ button.disabled=false;busy=false;
+}
+
+function colorNumber(n){
+ if(n===0)return 'zero';
+ return [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(n)?'red':'black';
+}
+function createBoards(){
+ for(const mode of ['classic','special']){
+  const board=$(mode+'Board');board.innerHTML='';
+  for(let n=0;n<=36;n++){
+   const b=document.createElement('button');
+   b.className='num '+colorNumber(n);b.id=mode+'n'+n;
+   b.textContent=n;b.onclick=()=>togglePick(mode,n);board.appendChild(b);
+  }
+  renderPicks(mode);
+ }
+}
+function togglePick(mode,n){
+ if(busy)return;
+ const set=picks[mode];
+ if(set.has(n))set.delete(n);else set.add(n);
+ renderPicks(mode);
+}
+function clearPicks(mode){if(busy)return;picks[mode].clear();renderPicks(mode)}
+function renderPicks(mode){
+ for(let n=0;n<=36;n++){
+  const b=$(mode+'n'+n);if(!b)continue;
+  b.classList.toggle('selected',picks[mode].has(n));
+  b.innerHTML=String(n);
+  if(mode==='special'&&multipliers[n])b.innerHTML=n+'<span class="mult">×'+multipliers[n]+'</span>';
+ }
+ $(mode+'Count').textContent=picks[mode].size+' números seleccionados';
+}
+async function spinRoulette(mode){
+ if(busy)return;
+ const set=picks[mode];
+ if(!set.size){toast('Selecciona al menos un número.');return}
+ const bet=validBet(mode==='classic'?'classicBet':'specialBet');
+ if(bet===null)return;
+ const total=bet*set.size;
+ if(!canAfford(total))return;
+ busy=true;
+ const button=$(mode+'Spin'),wheel=$(mode+'Wheel');
+ button.disabled=true;
+ state.balance-=total;persist();
+ wheel.classList.add('rolling');
+ if(mode==='special'){
+  multipliers={};
+  for(let n=0;n<=36;n++)multipliers[n]=choice([2,2,2,3,3,5,10]);
+  renderPicks(mode);
+  setResult('specialResult','Multiplicadores nuevos generados. La ruleta está girando…',false);
+ }else setResult('classicResult','La ruleta está girando…',false);
+ for(let i=0;i<13;i++){
+  wheel.textContent=rand(37);
+  beep(220+i*18,.025);
+  await wait(75+i*10);
+ }
+ const winner=rand(37);
+ wheel.classList.remove('rolling');wheel.textContent=winner;
+ const mult=mode==='special'?multipliers[winner]:36;
+ const won=set.has(winner),prize=won?bet*mult:0;
+ state.balance+=prize;
+ const delta=prize-total;
+ record(mode==='classic'?'Ruleta clásica':'Ruleta multiplicadora','Número '+winner+(mode==='special'?' · ×'+mult:''),delta);
+ const color=winner===0?'verde':colorNumber(winner)==='red'?'rojo':'negro';
+ $(mode+'Last').textContent=winner+' · '+color;
+ if(mode==='classic'){
+  setResult('classicResult','Resultado: '+winner+' ('+color+').\n'+(won?'¡Acierto! Recibes '+fmt(prize)+' HC en total (×36).':'No has acertado. Apuesta total: '+fmt(total)+' HC.'),won);
+ }else{
+  setResult('specialResult','Multiplicadores renovados en esta ronda.\nResultado: '+winner+' ('+color+') · Multiplicador ×'+mult+'.\n'+(won?'¡Acierto! Premio total: '+fmt(prize)+' HC (×'+mult+').':'No has acertado. Apuesta total: '+fmt(total)+' HC.'),won);
+ }
+ if(won)beep(880,.2);
+ renderPicks(mode);
+ button.disabled=false;busy=false;
+}
+
+function newCard(){
+ return {rank:choice(['A','2','3','4','5','6','7','8','9','10','J','Q','K']),suit:choice(['♠','♥','♦','♣'])};
+}
+function value(c){if(['J','Q','K'].includes(c.rank))return 10;if(c.rank==='A')return 11;return Number(c.rank)}
+function score(hand){
+ let sum=hand.reduce((s,c)=>s+value(c),0),aces=hand.filter(c=>c.rank==='A').length;
+ while(sum>21&&aces>0){sum-=10;aces--}
+ return sum;
+}
+function drawHand(id,hand,hide=false){
+ const box=$(id);box.innerHTML='';
+ hand.forEach((c,i)=>{
+  const el=document.createElement('div');el.className='playcard';
+  if(hide&&i===0){el.innerHTML='✦<small>Oculta</small>'}
+  else{
+   el.style.color=['♥','♦'].includes(c.suit)?'#a22b35':'#191714';
+   el.innerHTML=esc(c.rank+c.suit)+'<small>'+esc(({A:'AS',J:'JOTA',Q:'REINA',K:'REY'}[c.rank]||c.rank))+'</small>';
+  }
+  box.appendChild(el);
+ });
+}
+function updateBJ(hide=true){
+ drawHand('playerHand',bj.player);
+ drawHand('dealerHand',bj.dealer,hide&&bj.active);
+ $('playerScore').textContent='('+score(bj.player)+')';
+ $('dealerScore').textContent=hide&&bj.active?'(?)':'('+score(bj.dealer)+')';
+}
+function startBJ(){
+ if(bj.active)return;
+ const bet=validBet('bjBet');if(bet===null)return;
+ if(!canAfford(bet))return;
+ state.balance-=bet;persist();
+ bj={player:[newCard(),newCard()],dealer:[newCard(),newCard()],active:true,bet};
+ lockButtons(['bjStart'],true);lockButtons(['hitBtn','standBtn'],false);
+ updateBJ(true);setResult('bjResult','Tu turno: pide carta o plántate.',false);
+ if(score(bj.player)===21)stand();
+}
+function hit(){
+ if(!bj.active)return;
+ bj.player.push(newCard());beep(400);updateBJ(true);
+ if(score(bj.player)>21)endBJ('Te has pasado de 21. Pierdes la apuesta.',0);
+ else if(score(bj.player)===21)stand();
+}
+function stand(){
+ if(!bj.active)return;
+ while(score(bj.dealer)<17)bj.dealer.push(newCard());
+ updateBJ(false);
+ const p=score(bj.player),d=score(bj.dealer);
+ if(d>21)endBJ('El crupier se pasa. ¡Ganas!',bj.bet*2);
+ else if(p>d)endBJ('Tu puntuación es mayor. ¡Ganas!',bj.bet*2);
+ else if(p===d)endBJ('Empate. Recuperas tu apuesta.',bj.bet);
+ else endBJ('El crupier gana esta ronda.',0);
+}
+function endBJ(msg,prize){
+ bj.active=false;state.balance+=prize;
+ lockButtons(['bjStart'],false);lockButtons(['hitBtn','standBtn'],true);
+ updateBJ(false);
+ const delta=prize-bj.bet;
+ record('Blackjack',msg,delta);
+ setResult('bjResult',msg+' Premio total devuelto: '+fmt(prize)+' HC.',prize>bj.bet);
+}
+function resetDemo(){
+ if(busy||bj.active){toast('Termina la partida actual antes de restablecer.');return}
+ if(!confirm('¿Restablecer el saldo a 20.000 HC y borrar el historial local?'))return;
+ state={balance:INITIAL,games:0,history:[],net:0};
+ picks={classic:new Set(),special:new Set()};multipliers={};
+ createBoards();persist();
+ toast('Demostración restablecida.');
+}
+createBoards();renderStats();
+</script>
+</body>
+</html>
